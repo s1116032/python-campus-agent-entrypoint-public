@@ -1,0 +1,5 @@
+streamlit
+fastmcp
+langchain-ollama
+langchain-core
+lingua-language-detector==2.2.0

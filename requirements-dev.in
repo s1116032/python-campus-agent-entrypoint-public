@@ -1,0 +1,7 @@
+# requirements-dev.in
+
+# 繼承正式環境依賴
+-r requirements.in
+
+# 測試框架
+pytest
