@@ -2,21 +2,17 @@
 
 本專案是從 `python-local-campus-ai-assistant-public` 獨立出來的重構專案。
 
-前一專案包含 RAG 校園知識問答與預約討論室功能。本專案先限縮至基礎本地聊天 Agent，專注整理使用者輸入進入模型前的前處理流程。
+前一專案包含 RAG 校園知識問答與預約討論室功能。本專案先限縮至基礎本地聊天 Agent，專注整理使用者輸入進入模型前的前處理流程與意圖路由。
 
 ---
 
 ## 架構規劃
 
-本專案目前先聚焦在輸入前處理，作為 Agent 的入口層。
+本專案作為 Agent 的入口層，目前已實作：
 
-後續規劃加入：
-
+- 輸入前處理（白名單、正規化、語言檢測）。
 - 提示詞注入防護層。
-- 路由層。
-- 輸出端檢查。
-
-上述項目目前尚未實作，本版本先以輸入前處理為主。
+- 意圖路由層。
 
 ---
 
@@ -35,7 +31,11 @@ Unicode 正規化
     ↓
 語言檢測，僅允許中文與英文
     ↓
-送入本地 LLM
+提示詞注入防護
+    ↓
+意圖路由 (Semantic Router)
+    ↓
+送入本地 LLM 或 回傳施工中訊息
 ```
 
 ---
@@ -92,6 +92,19 @@ Unicode 正規化
 - 降低模型處理未知語言時的成本與不確定性。
 - 在較重的安全模型之前先做輕量篩選。
 
+### 5. 提示詞注入防護
+
+使用 `Qwen3Guard-Gen-8B` 模型檢查輸入是否可能包含提示詞注入。目前僅使用 4-bit 模式。
+
+### 6. 意圖路由
+
+使用 `semantic-router` 與 `bge-m3` 模型判斷使用者意圖。
+目前定義的意圖包含：
+
+- `campus_info`: 校園資訊問答。因需 RAG，目前先回傳「施工中」訊息。
+- `chitchat`: 日常閒聊，交由 LLM 處理。
+- `fallback`: 無法明確分類，交由 LLM 處理。
+
 ---
 
 ## 技術選型
@@ -104,6 +117,8 @@ Unicode 正規化
 | LLM 模型 | `qwen2.5:7b` |
 | LangChain 整合 | `langchain-ollama`、`langchain-core` |
 | 語言檢測 | `lingua-language-detector` |
+| 提示詞注入防護 | `Qwen3Guard-Gen-8B`、`transformers`、`bitsandbytes` |
+| 意圖路由 | `semantic-router`、`bge-m3` |
 | 單元測試 | `pytest` |
 | 依賴管理 | `pip-tools` |
 
@@ -114,9 +129,11 @@ Unicode 正規化
 ```text
 campus-agent-entrypoint/
 ├── app.py                  # Streamlit 主程式與聊天流程
-├── mcp_server.py           # 最小 MCP Server，目前保留連線與擴充用途
+├── mcp_server.py           # 最小 MCP Server
 ├── input_guard.py          # 白名單、文長限制、Unicode 正規化
 ├── language_guard.py       # 中英文語言檢測
+├── prompt_guard.py         # 提示詞注入防護
+├── router.py               # 意圖路由
 ├── requirements.in         # 手動維護的正式依賴
 ├── requirements.txt        # 由 pip-compile 自動產生
 ├── requirements-dev.in     # 手動維護的開發依賴
@@ -141,6 +158,7 @@ pip install -r requirements-dev.txt
 
 ```bash
 ollama pull qwen2.5:7b
+ollama pull bge-m3
 ```
 
 啟動應用：
@@ -170,7 +188,16 @@ tests/manual_test_cases.txt
 ## 已知限制
 
 - 語言檢測目前使用較小規模資料與規則調整參數，短文本、混合語言或特殊用語仍可能誤判。
+- 意圖路由目前使用較小規模語料與規則調整參數，對於語意相近但意圖不同的輸入，或較複雜的長句，仍可能誤判。
 - 編碼後資料的種類較多，若要處理可能需要多層檢查，且可能產生誤報副作用，因此目前先不納入。
+
+---
+
+## 未來規劃
+
+- 校園資訊問答 (RAG) 實際對話功能。
+- 輸出端檢查。
+- 指代消解。
 
 ---
 

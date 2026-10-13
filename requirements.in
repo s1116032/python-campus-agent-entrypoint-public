@@ -1,5 +1,19 @@
+# Web UI
 streamlit
+
+# MCP & Agent 框架
 fastmcp
 langchain-ollama
 langchain-core
+
+# 語言檢測
 lingua-language-detector==2.2.0
+
+# 提示詞注入防護
+torch
+transformers
+bitsandbytes
+accelerate
+
+# 意圖路由
+semantic-router

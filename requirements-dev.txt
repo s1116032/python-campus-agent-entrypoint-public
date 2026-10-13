@@ -4,10 +4,25 @@
 #
 #    pip-compile requirements-dev.in
 #
+accelerate==1.15.0
+    # via -r requirements.in
 aiofile==3.12.3
     # via py-key-value-aio
+aiofiles==24.1.0
+    # via aurelio-sdk
+aiohappyeyeballs==2.7.1
+    # via aiohttp
+aiohttp==3.14.5
+    # via
+    #   aurelio-sdk
+    #   litellm
+    #   semantic-router
+aiosignal==1.4.0
+    # via aiohttp
 altair==6.3.0
     # via streamlit
+annotated-doc==0.0.5
+    # via typer
 annotated-types==0.8.0
     # via pydantic
 anyio==4.15.1
@@ -16,6 +31,7 @@ anyio==4.15.1
     #   httpx2
     #   langsmith
     #   mcp
+    #   openai
     #   py-key-value-aio
     #   sse-starlette
     #   starlette
@@ -23,14 +39,25 @@ anyio==4.15.1
     #   watchfiles
 attrs==26.1.0
     # via
+    #   aiohttp
     #   cyclopts
     #   jsonschema
     #   jsonschema-path
     #   referencing
+aurelio-sdk==0.0.19
+    # via semantic-router
 authlib==1.8.0
     # via fastmcp-slim
 beartype==0.22.9
     # via py-key-value-aio
+bitsandbytes==0.50.2
+    # via -r requirements.in
+boto3==1.43.112
+    # via litellm
+botocore==1.43.112
+    # via
+    #   boto3
+    #   s3transfer
 cachetools==7.2.1
     # via py-key-value-aio
 caio==0.12.9
@@ -46,10 +73,21 @@ charset-normalizer==3.5.2
     # via requests
 click==8.5.0
     # via
+    #   huggingface-hub
+    #   litellm
     #   streamlit
     #   uvicorn
 colorama==0.4.6
-    # via pytest
+    # via
+    #   colorlog
+    #   pytest
+    #   semantic-router
+    #   tqdm
+    #   typer
+colorlog==6.12.0
+    # via
+    #   aurelio-sdk
+    #   semantic-router
 cryptography==50.0.2
     # via
     #   authlib
@@ -58,7 +96,9 @@ cryptography==50.0.2
 cyclopts==5.2.0
     # via fastmcp-slim
 distro==1.9.0
-    # via langsmith
+    # via
+    #   langsmith
+    #   openai
 dnspython==2.9.0
     # via email-validator
 docstring-parser==0.18.0
@@ -71,6 +111,20 @@ fastmcp==4.1.0
     # via -r requirements.in
 fastmcp-slim[client,server]==4.1.0
     # via fastmcp
+fastuuid==0.14.0
+    # via litellm
+filelock==4.1.0
+    # via
+    #   huggingface-hub
+    #   torch
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
+fsspec==2026.9.0
+    # via
+    #   huggingface-hub
+    #   torch
 griffelib==2.3.2
     # via fastmcp-slim
 h11==0.16.0
@@ -78,21 +132,37 @@ h11==0.16.0
     #   httpcore
     #   httpcore2
     #   uvicorn
+h2==4.4.1
+    # via httpx
+hf-xet==1.7.0
+    # via huggingface-hub
+hpack==4.2.0
+    # via h2
 httpcore==1.0.9
     # via httpx
 httpcore2==2.13.1
     # via httpx2
 httptools==0.9.0
     # via streamlit
-httpx==0.28.1
+httpx[http2]==0.28.1
     # via
     #   langchain-core
+    #   litellm
     #   ollama
+    #   openai
 httpx2==2.13.1
     # via
     #   fastmcp-slim
+    #   huggingface-hub
     #   langsmith
     #   mcp
+huggingface-hub==2.2.0
+    # via
+    #   accelerate
+    #   tokenizers
+    #   transformers
+hyperframe==6.1.0
+    # via h2
 idna==3.20
     # via
     #   anyio
@@ -100,6 +170,9 @@ idna==3.20
     #   httpx
     #   httpx2
     #   requests
+    #   yarl
+importlib-metadata==8.9.0
+    # via litellm
 iniconfig==2.3.1
     # via pytest
 itsdangerous==2.2.0
@@ -113,7 +186,15 @@ jaraco-functools==4.6.0
 jinja2==3.1.6
     # via
     #   altair
+    #   litellm
     #   pydeck
+    #   torch
+jiter==0.17.0
+    # via openai
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
 joserfc==1.7.5
     # via
     #   authlib
@@ -127,6 +208,7 @@ jsonref==1.1.0
 jsonschema==4.26.0
     # via
     #   altair
+    #   litellm
     #   mcp
 jsonschema-path==0.5.0
     # via fastmcp-slim
@@ -146,6 +228,8 @@ langsmith==0.14.7
     # via langchain-core
 lingua-language-detector==2.2.0
     # via -r requirements.in
+litellm==1.103.4
+    # via semantic-router
 markdown-it-py==4.2.0
     # via rich
 markupsafe==3.0.4
@@ -162,15 +246,31 @@ more-itertools==11.1.0
     # via
     #   jaraco-classes
     #   jaraco-functools
+mpmath==1.3.0
+    # via sympy
+multidict==7.1.0
+    # via
+    #   aiohttp
+    #   yarl
 narwhals==2.26.0
     # via altair
+networkx==3.7
+    # via torch
 numpy==2.5.3
     # via
+    #   accelerate
+    #   bitsandbytes
     #   pandas
     #   pydeck
+    #   semantic-router
     #   streamlit
+    #   transformers
 ollama==0.6.3
     # via langchain-ollama
+openai==2.54.0
+    # via
+    #   litellm
+    #   semantic-router
 openapi-pydantic==0.6.0
     # via fastmcp-slim
 opentelemetry-api==1.45.1
@@ -181,12 +281,16 @@ orjson==3.13.0
     # via langsmith
 packaging==26.3
     # via
+    #   accelerate
     #   altair
+    #   bitsandbytes
     #   fastmcp-slim
+    #   huggingface-hub
     #   langchain-core
     #   langsmith
     #   pytest
     #   streamlit
+    #   transformers
 pandas==3.0.6
     # via streamlit
 pathable==0.6.0
@@ -197,8 +301,14 @@ platformdirs==4.12.4
     # via fastmcp-slim
 pluggy==1.6.0
     # via pytest
+propcache==0.5.4
+    # via
+    #   aiohttp
+    #   yarl
 protobuf==7.36.2
     # via streamlit
+psutil==7.2.2
+    # via accelerate
 py-key-value-aio[filetree,keyring,memory]==0.4.6
     # via fastmcp-slim
 pyarrow==25.0.1
@@ -207,18 +317,24 @@ pycparser==3.11
     # via cffi
 pydantic[email]==2.14.0
     # via
+    #   aurelio-sdk
     #   fastmcp-slim
     #   langchain-core
     #   langsmith
+    #   litellm
     #   mcp
     #   mcp-types
     #   ollama
+    #   openai
     #   openapi-pydantic
     #   pydantic-settings
+    #   semantic-router
 pydantic-core==2.50.0
     # via pydantic
 pydantic-settings==2.15.0
-    # via fastmcp-slim
+    # via
+    #   fastmcp-slim
+    #   litellm
 pydeck==0.9.3
     # via streamlit
 pygments==2.21.0
@@ -233,10 +349,14 @@ pyperclip==1.11.0
 pytest==9.1.1
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
-    # via pandas
+    # via
+    #   botocore
+    #   pandas
 python-dotenv==1.2.4
     # via
+    #   aurelio-sdk
     #   fastmcp-slim
+    #   litellm
     #   pydantic-settings
 python-multipart==0.0.32
     # via
@@ -249,36 +369,62 @@ pywin32-ctypes==0.2.3
     # via keyring
 pyyaml==6.0.3
     # via
+    #   accelerate
     #   fastmcp-slim
+    #   huggingface-hub
     #   jsonschema-path
     #   langchain-core
+    #   semantic-router
+    #   transformers
 referencing==0.37.0
     # via
     #   jsonschema
     #   jsonschema-path
     #   jsonschema-specifications
+regex==2026.9.29
+    # via
+    #   semantic-router
+    #   tiktoken
+    #   transformers
 requests==2.34.2
     # via
+    #   aurelio-sdk
     #   langsmith
     #   requests-toolbelt
     #   streamlit
+    #   tiktoken
 requests-toolbelt==1.0.0
-    # via langsmith
+    # via
+    #   aurelio-sdk
+    #   langsmith
 rich==15.0.0
     # via
     #   cyclopts
     #   fastmcp-slim
     #   rich-rst
+    #   typer
 rich-rst==2.2.0
     # via cyclopts
 rpds-py==2026.9.1
     # via
     #   jsonschema
     #   referencing
+s3transfer==0.19.2
+    # via boto3
+safetensors==0.8.0
+    # via
+    #   accelerate
+    #   transformers
+semantic-router==0.1.16
+    # via -r requirements.in
+shellingham==1.5.4
+    # via typer
 six==1.17.0
     # via python-dateutil
 sniffio==1.3.1
-    # via langsmith
+    # via
+    #   langsmith
+    #   openai
 sse-starlette==3.5.0
     # via mcp
 starlette==1.7.0
@@ -289,26 +435,58 @@ starlette==1.7.0
     #   streamlit
 streamlit==1.65.0
     # via -r requirements.in
+sympy==1.14.0
+    # via torch
 tenacity==9.2.1
     # via langchain-core
+tiktoken==0.14.0
+    # via
+    #   litellm
+    #   semantic-router
+tokenizers==0.23.3
+    # via
+    #   litellm
+    #   transformers
 toml==0.10.2
     # via streamlit
+torch==2.14.1
+    # via
+    #   -r requirements.in
+    #   accelerate
+    #   bitsandbytes
+tornado==6.5.10
+    # via
+    #   aurelio-sdk
+    #   semantic-router
+tqdm==4.70.1
+    # via
+    #   huggingface-hub
+    #   openai
+    #   transformers
+transformers==5.19.0
+    # via -r requirements.in
 truststore==0.10.4
     # via
     #   httpcore2
     #   httpx2
+typer==0.27.3
+    # via transformers
 typing-extensions==4.16.0
     # via
+    #   aiohttp
+    #   aiosignal
     #   altair
     #   anyio
     #   exceptiongroup
     #   fastmcp-slim
     #   httpx2
+    #   huggingface-hub
     #   langchain-core
     #   langchain-protocol
     #   langsmith
     #   mcp
     #   mcp-types
+    #   openai
     #   opentelemetry-api
     #   py-key-value-aio
     #   pydantic
@@ -316,6 +494,7 @@ typing-extensions==4.16.0
     #   referencing
     #   starlette
     #   streamlit
+    #   torch
     #   typing-inspection
 typing-inspection==0.4.4
     # via
@@ -327,7 +506,10 @@ tzdata==2026.5
 uncalled-for==0.4.1
     # via fastmcp-slim
 urllib3==2.8.0
-    # via requests
+    # via
+    #   botocore
+    #   requests
+    #   semantic-router
 uuid-utils==0.17.1
     # via
     #   langchain-core
@@ -348,5 +530,12 @@ websockets==17.2
     #   streamlit
 xxhash==4.0.1
     # via langsmith
+yarl==1.25.1
+    # via aiohttp
+zipp==4.1.1
+    # via importlib-metadata
 zstandard==0.25.0
     # via langsmith
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
