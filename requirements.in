@@ -17,3 +17,18 @@ accelerate
 
 # 意圖路由
 semantic-router
+
+# 環境變數
+python-dotenv
+
+# 輸出後處理（簡轉繁）
+opencc-python-reimplemented
+
+# RAG 混合檢索
+langchain-classic
+langchain-community
+langchain-text-splitters
+rank_bm25
+jieba
+chromadb
+langchain-chroma
